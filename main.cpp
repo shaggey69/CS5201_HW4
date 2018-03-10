@@ -1,7 +1,7 @@
 /*
 # main file for the 4th Prgram!
 # By: Ari Sherman
-# Class: CS5201 HW #3
+# Class: CS5201 HW #4
 # Date: 3.12.18
 */
 #include <iostream>
@@ -24,11 +24,13 @@ int main(int argc, char *argv[])
 	//declartion of vars
 	ifstream in;
 	int num_of_paris = 0 ;
-
-	vector < tuple<double ,double > > dataVec, dataVec2;
-
-	Newton<double > my_newton;
 	double  temp1 = 0 , temp2 = 0;
+	vector < tuple<double ,double > > dataVec, dataVec2;
+	MyArray <tuple <double,double>> ChevSpace;
+	Newton<double > my_newton ,chevPoly;
+	Cheby<double> chev; 
+	Errcalc<double> err;
+	FuncCalc<double> tempFunc;
 
 	if (argc < 3)
     cout << endl << "not enough inputs :(" << endl ;
@@ -46,9 +48,12 @@ int main(int argc, char *argv[])
     	cout << endl << "invailed file :("  << endl;
 		else
 		{
+
+
 			num_of_paris = atoi(argv[1]);
-			Cheby<double> chev; 
+
 			MyArray <tuple <double,double>> ChevSpace = chev(num_of_paris);
+
 			cout << endl << "#1 Mr.Chevy's values " << endl << endl;
 			for (int i = 0 ; i < ChevSpace.getSize() ; i++)
 			{
@@ -57,22 +62,20 @@ int main(int argc, char *argv[])
 				dataVec.push_back(make_tuple(get<0>(ChevSpace[i]),get<1>(ChevSpace[i])));
 			}
 			
+
+
 			cout << endl << "#2 coefficients " << endl << endl;
-			Newton<double> chevPoly;
 			chevPoly.AddValues(dataVec);
 			chevPoly.coefficientsPrint();
 			
-
 			cout << endl << "#3 interpolant values " << endl << endl;
  			for (float i = 0.1 ; i <= 0.9 ; i += 0.2)
  				cout << chevPoly.interpolantVals(i) << endl;
 
  			cout << endl << "#4 true values " << endl << endl;
- 			FuncCalc<double> tempFunc;
 			for (float i = 0.1 ; i <= 0.9 ; i += 0.2)
 				cout << tempFunc(i) << endl;
 		
-			Errcalc<double> err;
 
 			cout << endl << "#5 absloue error values " << endl << endl;
  			for (float i = 0.1 ; i <= 0.9 ; i += 0.2)
