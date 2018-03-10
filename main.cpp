@@ -2,7 +2,7 @@
 # main file for the 4th Prgram!
 # By: Ari Sherman
 # Class: CS5201 HW #3
-# Date: 3.9.18
+# Date: 3.12.18
 */
 #include <iostream>
 #include <fstream>
@@ -12,13 +12,11 @@
 #include <cmath>
 #include <cstdlib>
 
-
 #include "myArray.h"
 #include "newton.h"
 #include "Cheby.h"
 #include "funcCalc.h"
-
-
+#include "errcalc.h"
 
 using namespace std;
 int main(int argc, char *argv[])
@@ -27,9 +25,10 @@ int main(int argc, char *argv[])
 	ifstream in;
 	int num_of_paris = 0 ;
 
-	vector < tuple<double ,double > > dataVec;
-	//Newton<double > my_newton;
-	//double  temp1 = 0 , temp2 = 0;
+	vector < tuple<double ,double > > dataVec, dataVec2;
+
+	Newton<double > my_newton;
+	double  temp1 = 0 , temp2 = 0;
 
 	if (argc < 3)
     cout << endl << "not enough inputs :(" << endl ;
@@ -73,9 +72,27 @@ int main(int argc, char *argv[])
 			for (float i = 0.1 ; i <= 0.9 ; i += 0.2)
 				cout << tempFunc(i) << endl;
 		
+			Errcalc<double> err;
 
+			cout << endl << "#5 absloue error values " << endl << endl;
+ 			for (float i = 0.1 ; i <= 0.9 ; i += 0.2)
+ 				cout << err.absError(tempFunc(i),chevPoly.interpolantVals(i)) << endl;
 
+ 			cout << endl << "#6 relative error values " << endl << endl;
+ 			for (float i = 0.1 ; i <= 0.9 ; i += 0.2)
+ 				cout << err.relError(tempFunc(i),chevPoly.interpolantVals(i)) << endl;
 
+ 			cout << endl << "#7 comparison " << endl << endl;
+ 			for (int i = 0; i < num_of_paris ; i++)
+			{
+				in >> temp1	;
+				in >> temp2 ;
+				dataVec2.push_back(make_tuple(temp1,temp2));
+			}
+			my_newton.AddValues(dataVec2);
+			for (float i = 0.1 ; i <= 0.9 ; i += 0.2)
+				cout << err.relError( my_newton.interpolantVals(i),
+				chevPoly.interpolantVals(i)) << endl;
 		}
 	}
 
