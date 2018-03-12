@@ -1,4 +1,11 @@
-//'()' Operator
+/*
+implmentation of Cheby class
+By: Ari Sherman
+Class: CS5201 HW #4
+Date: 3.12.18
+*/
+
+// operator () for Cheby
 template <typename T>
 MyArray <tuple <T,T>> Cheby<T>::operator()(const int num)
 {

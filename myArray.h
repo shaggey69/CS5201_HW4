@@ -6,15 +6,15 @@
 /*
 # myArray class header
 # By: Ari Sherman
-# Class: CS5201 HW #3
-# Date: 2.26.18
+# Class: CS5201 HW #4
+# Date: 3.12.18
 */
 #ifndef MYARRAY_H
 #define MYARRAY_H
 
 #include <iostream>
-using namespace std;
 
+using namespace std;
 
 template <typename T>
 class MyArray;
@@ -74,6 +74,7 @@ public:
   * \post a MyArray is born!
   *
   */
+
   MyArray();
 
   /*! copy constructor.
@@ -84,8 +85,18 @@ public:
   *
   */
 
-
   MyArray(const MyArray<T>& rhs);
+
+  /*! move constructor.
+  * A new Array is craeted length equel to RHS
+  * size. New array does NOT point to same adress as RHS.
+  * \pre 
+  * \post a MyArray is born!
+  *
+  */
+
+  MyArray(MyArray && rhs) : ptr_to_data(rhs.ptr_to_data), m_size(rhs.m_size)
+  {rhs.ptr_to_data = nullptr; rhs.m_size = 0; }
 
   /*! deconstructor.
   *

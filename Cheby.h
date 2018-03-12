@@ -1,12 +1,12 @@
 /*! \file
  *
- * A Polar library.
+ * the Cheby class
  */
 /*
-header function and implments for Cheby class
+header function for Cheby class
 By: Ari Sherman
 Class: CS5201 HW #4
-Date: 2.12.18
+Date: 3.12.18
 */
 #ifndef CHEBY_H
 #define CHEBY_H
@@ -28,6 +28,14 @@ const double PI = 3.141592653589793;
 template <typename T>
 class Cheby
 {
+	/*! operator () for Cheby
+  * This functions generates data points acording to the
+  * Chebyshev spacing method in the [-1,1] interval. Num is the
+  * number of points the function will generate. 
+  * \pre num > 0
+  * \post none
+  *
+  */
 	public:
 		MyArray <tuple <T,T>> operator()(const int num) ;
 };

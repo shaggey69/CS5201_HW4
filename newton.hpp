@@ -1,3 +1,9 @@
+/*
+# Newton class functoins
+# By: Ari Sherman
+# Class: CS5201 HW #4
+# Date: 3.12.18
+*/
 #include <iostream>
 #include <cmath>
 #include <vector>
@@ -8,7 +14,7 @@
 
 using namespace std;
 
-
+// Add data points to intervalData.
 template <typename T>   
 void Newton<T>::AddValues(vector <tuple <T,T> > theDataVec)
 {
@@ -21,6 +27,7 @@ void Newton<T>::AddValues(vector <tuple <T,T> > theDataVec)
 	return;
 }
 
+//operator []
 template <typename T>   
 T Newton<T>::operator[](const int placer) const
 {
@@ -29,6 +36,7 @@ T Newton<T>::operator[](const int placer) const
 	return 0;
 }
 
+//caluclate Newton Polynomial Divdion fucntion
 template <typename T>   
 void Newton<T>::calcNewton()
 {
@@ -66,7 +74,7 @@ void Newton<T>::calcNewton()
 
 	return;
 }
-
+ //interpolantVals calculation function
 template <typename T>   
 T Newton<T>::interpolantVals ( const T & x) 
 {
@@ -80,16 +88,33 @@ T Newton<T>::interpolantVals ( const T & x)
 	return retVal;
 }
 
-
+// coefficent printer function
 template <typename T>   
 void Newton<T>::coefficientsPrint()
 {
-	for ( int i = 0 ; i < polyTable.getSize() ; i ++)
-		cout << polyTable[i][i] << endl;
+	int size = intervalData.getSize();
+	MyArray<T> coefHelper (size);
+	MyArray<T> center (size-1);
+ 	coefHelper.insert(polyTable[size-1][size-1],size-1);
+	for (int i = 0 ; i < size-1 ;i++)
+	{
+		center.insert(get<0>(intervalData[i]),i);
+		coefHelper.insert(polyTable[i][i],i);
+	}
+	for (int i = 0 ; i < size-1 ; i ++)
+	{
+		for (int j = size-1 ; j > 0 ; j--)
+			coefHelper.insert((coefHelper[j-1])+(0 - center[j-1])
+			*(coefHelper[j]),j-1);
+		for (int k = size-2 ; k > 0 ; k--)
+				center.insert(center[k-1],k);
+		center.insert(0,0);
+	}
+	cout << coefHelper;
 	return;
 }
 
-
+//print
 template <typename T>   
  ostream& operator<< (ostream& out , Newton<T> & n)
 {
@@ -99,19 +124,16 @@ template <typename T>
   return out;
 }
 
-
+// Absloute error
 template <typename T>   
 T  Newton<T>::absErr(const T & x)
 {	
-	return (fabs( 1/(1+12*pow((x),2)) - interpolantVals(x) )*100);
+	return (fabs( 1/(1+12*pow((x),2)) - interpolantVals(x) ) *100);
 }
 
+// Relative error
 template <typename T>   
 T Newton<T>::relErr(const T & x) 
 {	
 	return (fabs(absErr(x)/(1/(1+12*pow((x),2)))));
 }
-
-
-//ABS error : (actuel func) - (table)
-//rel error: abs error/actuel func

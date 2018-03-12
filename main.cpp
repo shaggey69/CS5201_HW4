@@ -49,7 +49,6 @@ int main(int argc, char *argv[])
 		else
 		{
 
-
 			num_of_paris = atoi(argv[1]);
 
 			MyArray <tuple <double,double>> ChevSpace = chev(num_of_paris);
@@ -62,8 +61,6 @@ int main(int argc, char *argv[])
 				dataVec.push_back(make_tuple(get<0>(ChevSpace[i]),get<1>(ChevSpace[i])));
 			}
 			
-
-
 			cout << endl << "#2 coefficients " << endl << endl;
 			chevPoly.AddValues(dataVec);
 			chevPoly.coefficientsPrint();
@@ -74,8 +71,7 @@ int main(int argc, char *argv[])
 
  			cout << endl << "#4 true values " << endl << endl;
 			for (float i = 0.1 ; i <= 0.9 ; i += 0.2)
-				cout << tempFunc(i) << endl;
-		
+				cout << tempFunc(i) << endl;		
 
 			cout << endl << "#5 absloue error values " << endl << endl;
  			for (float i = 0.1 ; i <= 0.9 ; i += 0.2)
